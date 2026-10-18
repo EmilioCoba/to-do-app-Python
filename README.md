@@ -5,13 +5,13 @@ A simple To-Do List web application built with Flask, Flask-SQLAlchemy, SQLite, 
 ## Screenshots
 
 ### Home Page
-![Home Page](screenshots/Screenshot_9.png)
+![Home Page](Screenshot_9.png)
 
 ### Add Task
-![Add Task](screenshots/Screenshot_10.png)
+![Add Task](Screenshot_10.png)
 
 ### Edit Task
-![Edit Task](screenshots/Screenshot_11.png)
+![Edit Task](Screenshot_11.png)
 
 ## Features
 
