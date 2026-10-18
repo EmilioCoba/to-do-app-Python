@@ -1,0 +1,75 @@
+
+{% extends 'base.html' %}
+{% block title %}Add a Task{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-5">
+
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body p-4 p-md-5">
+
+                    <!-- Header -->
+                    <div class="text-center mb-4">
+                        <div class="mb-3">
+                            <span class="badge rounded-pill bg-primary-subtle text-primary px-3 py-2">
+                                My To Do List
+                            </span>
+                        </div>
+
+                        <h1 class="h3 fw-bold mb-2">Edit your task</h1>
+
+                        <p class="text-muted mb-0">
+                            What would you like to get done today?
+                        </p>
+                    </div>
+
+                    <!-- Task form -->
+                    <form method="POST" novalidate>
+                        {{ form.hidden_tag() }}
+
+                        <div class="mb-4">
+                            {{ form.task.label(class="form-label fw-semibold") }}
+
+                            {{ form.task(
+                                class="form-control form-control-lg rounded-3" ~
+                                (" is-invalid" if form.task.errors else ""),
+                                placeholder="e.g. Finish my project",
+                                autocomplete="off"
+                            ) }}
+
+                            {% if form.task.errors %}
+                                {% for error in form.task.errors %}
+                                    <div class="invalid-feedback">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="d-grid">
+                            {{ form.submit(
+                                class="btn btn-primary btn-lg rounded-3 fw-semibold",
+                                value="Update Task"
+                            ) }}
+                              <a href="{{ url_for('home') }}"
+       class="btn btn-outline-secondary btn-lg rounded-3 mt-2">
+        <i class="bi bi-arrow-left"></i> Go Back
+    </a>
+                        </div>
+                    </form>
+
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

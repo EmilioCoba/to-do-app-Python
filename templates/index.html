@@ -1,0 +1,120 @@
+
+{% extends 'base.html' %}
+{% block title %}To Do App{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+    {% if tasks %}
+        {% set incomplete_tasks = tasks | rejectattr('is_task_complete') | list %}
+        {% set completed_tasks = tasks | selectattr('is_task_complete') | list %}
+
+        <!-- To do tasks -->
+        <section class="mb-5">
+            <h1 class="mb-3">To do tasks</h1>
+
+            {% if incomplete_tasks %}
+                <div class="d-flex flex-row flex-wrap gap-3">
+                    {% for task in incomplete_tasks %}
+                        <div class="card shadow-sm p-3"
+                             style="width: 250px;">
+
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-secondary">
+                                    #{{ task.id }}
+                                </span>
+                                <span class="badge bg-warning text-dark">
+                                    Pending
+                                </span>
+                            </div>
+
+                            <h5 class="card-title">
+                                {{ task.task }}
+                            </h5>
+
+                            <div class="d-flex flex-column gap-2 mt-2">
+                                <a href="{{url_for('edit',task_id=task.id)}}"
+                                   class="btn btn-outline-primary btn-sm">
+                                    Edit
+                                </a>
+
+                                <a href="{{ url_for('done', task_id=task.id) }}"
+                                   class="btn btn-success btn-sm">
+                                    <i class="bi bi-check-circle"></i>
+                                    Mark as done
+                                </a>
+
+                                <a href="{{ url_for('delete', task_id=task.id) }}"
+                                   class="btn btn-outline-danger btn-sm">
+                                    Delete
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-info">
+                    <h5 class="mb-1">All caught up!</h5>
+                    <p class="mb-0">No tasks yet! Add a new task to get started.</p>
+                </div>
+            {% endif %}
+        </section>
+
+        <!-- Completed tasks -->
+        <section>
+            <h1 class="mb-3">Completed tasks</h1>
+
+            {% if completed_tasks %}
+                <div class="d-flex flex-row flex-wrap gap-3">
+                    {% for task in completed_tasks %}
+                        <div class="card shadow-sm p-3 border-success"
+                             style="width: 250px;">
+
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-secondary">
+                                    #{{ task.id }}
+                                </span>
+                                <span class="badge bg-success">
+                                    Completed
+                                </span>
+                            </div>
+
+                            <h5 class="card-title text-muted">
+                                <del>{{ task.task }}</del>
+                            </h5>
+
+                            <div class="d-flex flex-column gap-2 mt-2">
+                                <a href="{{ url_for('done', task_id=task.id) }}"
+                                   class="btn btn-outline-primary btn-sm">
+                                    Undo
+                                </a>
+
+                                <a href="{{ url_for('delete', task_id=task.id) }}"
+                                   class="btn btn-outline-danger btn-sm">
+                                    Delete
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-muted">
+                    No completed tasks yet.
+                </p>
+            {% endif %}
+        </section>
+
+    {% else %}
+        <div class="text-center py-5">
+            <h1 class="mb-3">Welcome to your To Do List!</h1>
+            <p class="text-muted">
+                You don't have any tasks yet. Add your first task to get started.
+            </p>
+        </div>
+    {% endif %}
+<div class="pt-5">
+
+    <a href="{{url_for('add')}}" class="btn btn-primary">Add new task</a>
+</div>
+</div>
+{% endblock %}
